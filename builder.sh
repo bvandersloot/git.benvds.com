@@ -1,6 +1,8 @@
 #!/bin/sh
 
-echo "Completed build"
+cat /keys/userlist | users.sh
 
-cd /srv; caddy -conf /etc/Caddyfile
-#cd /srv; /bin/bash 
+systemctl start ssh
+
+#cd /srv; caddy -conf /etc/Caddyfile
+cd /srv; /bin/bash 

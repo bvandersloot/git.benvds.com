@@ -12,7 +12,8 @@ RUN apt-get install -y \
         git \
         openssh-server \
 	curl \
-	bzr
+	bzr \
+	sudo
 
 RUN mkdir /goroot && \
     curl https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1 && \
@@ -31,12 +32,16 @@ RUN git clone https://github.com/mholt/caddy /gopath/src/github.com/mholt/caddy 
     && GOOS=linux GOARCH=amd64 go run build.go -goos=$GOOS -goarch=$GOARCH -goarm=$GOARM \
     && mv caddy /usr/bin
 
-EXPOSE 80 443 2015
+EXPOSE 80 443 2015 22
 VOLUME /caddyfolder /srv
 WORKDIR /srv
 
 COPY Caddyfile /etc/Caddyfile
-COPY index.html /srv/index.html
-
 COPY builder.sh /usr/bin/builder.sh
+COPY users.sh /usr/bin/users.sh
+COPY sshd_config /etc/ssh/sshd_config
+COPY keys/id_server /etc/ssh/ssh_host_ed25519_key
+COPY keys/id_server.pub /etc/ssh/ssh_host_ed25519_key.pub
+COPY keys/ /keys/
+COPY users /keys/userlist
 CMD ["/bin/sh", "/usr/bin/builder.sh"]
