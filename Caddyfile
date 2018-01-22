@@ -1,0 +1,13 @@
+0.0.0.0
+
+browse
+
+log stdout
+
+errors stdout
+
+cgi {
+	match /
+	exec /usr/lib/git-core/git-http-backend
+	pass_env GIT_PROJECT_ROOT GIT_HTTP_EXPORT_ALL
+}
