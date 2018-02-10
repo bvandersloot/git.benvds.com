@@ -32,7 +32,12 @@ RUN git clone https://github.com/mholt/caddy /gopath/src/github.com/mholt/caddy 
     && GOOS=linux GOARCH=amd64 go run build.go -goos=$GOOS -goarch=$GOARCH -goarm=$GOARM \
     && mv caddy /usr/bin
 
-EXPOSE 80 443 2015 22
+RUN mkdir -vp /var/run/sshd
+
+COPY ssh_start /usr/bin/ssh_start
+RUN chmod -v 755 /usr/bin/ssh_start
+
+EXPOSE 80 443 2015 2222
 VOLUME /caddyfolder /srv
 WORKDIR /srv
 
@@ -40,6 +45,7 @@ COPY Caddyfile /etc/Caddyfile
 COPY builder.sh /usr/bin/builder.sh
 COPY users.sh /usr/bin/users.sh
 COPY sshd_config /etc/ssh/sshd_config
+RUN chmod -v 644 /etc/ssh/sshd_config
 COPY keys/id_server /etc/ssh/ssh_host_ed25519_key
 COPY keys/id_server.pub /etc/ssh/ssh_host_ed25519_key.pub
 COPY keys/ /keys/
