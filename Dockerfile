@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-ENV GO_VERSION=1.8.1 \
+ENV GO_VERSION=1.9.4 \
     GOROOT=/goroot \
     GOPATH=/gopath 
 ENV PATH $PATH:$GOROOT/bin:$GOPATH/bin
@@ -40,6 +40,8 @@ RUN chmod -v 755 /usr/bin/ssh_start
 EXPOSE 80 443 2015 2222
 VOLUME /caddyfolder /srv
 WORKDIR /srv
+ENV CADDYPATH /caddyfolder
+
 
 COPY Caddyfile /etc/Caddyfile
 COPY builder.sh /usr/bin/builder.sh

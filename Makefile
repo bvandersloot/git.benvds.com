@@ -2,4 +2,4 @@ all:
 	docker build -t git .
 
 run:
-	docker run -i -t  -p 2222:2222 -p 2015:2015 -v $(CURDIR)/caddyfolder:/caddyfolder -v $(CURDIR)/data:/srv git
+	docker run -i -t  -p 22:22 -p 80:80 -p 443:443 -v $(CURDIR)/caddyfolder:/caddyfolder -v $(CURDIR)/data:/srv git
