@@ -7,7 +7,7 @@ ENV PATH $PATH:$GOROOT/bin:$GOPATH/bin
 ENV GIT_PROJECT_ROOT /srv
 ENV GIT_HTTP_EXPORT_ALL yes
 
-RUN apt-get update 
+RUN apt-get update -y 
 RUN apt-get install -y \
         git \
         openssh-server \
@@ -26,6 +26,9 @@ RUN git clone https://github.com/mholt/caddy /gopath/src/github.com/mholt/caddy 
     && go get -v $(caddyplug package cgi) \
     && printf "package caddyhttp\nimport _ \"$(caddyplug package cgi)\"" > \
     /gopath/src/github.com/mholt/caddy/caddyhttp/cgi.go  \
+    && go get -v $(caddyplug package git) \
+    && printf "package caddyhttp\nimport _ \"$(caddyplug package git)\"" > \
+    /gopath/src/github.com/mholt/caddy/caddyhttp/git.go  \
     && git clone https://github.com/caddyserver/builds /gopath/src/github.com/caddyserver/builds \
     && cd /gopath/src/github.com/mholt/caddy/caddy \
     && git checkout -f \
@@ -42,9 +45,15 @@ VOLUME /caddyfolder /srv
 WORKDIR /srv
 ENV CADDYPATH /caddyfolder
 
+RUN apt-get install -y make ruby-dev build-essential --fix-missing
+RUN gem install jekyll
 
-COPY Caddyfile /etc/Caddyfile
+COPY Caddyfile /tmp/Caddyfile
+COPY hook /tmp/hook
+RUN cat /tmp/Caddyfile | sed "s/REPLACEME/$(cat /tmp/hook)/g" > /etc/Caddyfile
+RUN rm /tmp/hook
 COPY builder.sh /usr/bin/builder.sh
+COPY pullsite.sh /usr/bin/pullsite.sh
 COPY users.sh /usr/bin/users.sh
 COPY sshd_config /etc/ssh/sshd_config
 RUN chmod -v 644 /etc/ssh/sshd_config
@@ -52,4 +61,6 @@ COPY keys/id_server /etc/ssh/ssh_host_ed25519_key
 COPY keys/id_server.pub /etc/ssh/ssh_host_ed25519_key.pub
 COPY keys/ /keys/
 COPY users /keys/userlist
+COPY known_hosts /tmp/known_hosts
+#RUN /usr/bin/pullsite.sh
 CMD ["/bin/sh", "/usr/bin/builder.sh"]

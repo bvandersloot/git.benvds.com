@@ -8,3 +8,24 @@ git.benvds.com {
 		pass_env GIT_PROJECT_ROOT GIT_HTTP_EXPORT_ALL
 	}
 }
+
+benvds.com {
+    log / stdout "{remote} [{when_iso}] \"{scheme} {method} {uri} {proto}\" {status} {size} \"{>Referer}\" \"{>User-Agent}\" \"{>DNT}\""
+    errors stderr
+    root /var/www/benvds.com/build/
+    ext .html
+}
+
+gh.benvds.com {
+    log stdout
+    errors stderr
+    git {
+            repo    git@github.com:bvandersloot/benvds.com.git
+            key     /var/www/.ssh/id_ed25519
+            branch  master
+            path    /var/www/benvds.com
+            then    make
+            hook    /_gh REPLACEME
+            hook_type       github
+    }
+}
