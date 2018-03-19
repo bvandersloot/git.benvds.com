@@ -1,0 +1,8 @@
+Hello! Welcome to my Git server!
+
+You can clone any of these repos in a reasonable way, but all of them are read-only. If you want to push anything back to these repos, let me know (admin@benvds.com). I can either get you an account, refer you to a GitHub mirror, or set up a GitHub mirror.
+
+Example: 
+$ git clone https://git.benvds.com/git/example-repo
+
+

@@ -62,5 +62,7 @@ COPY keys/id_server.pub /etc/ssh/ssh_host_ed25519_key.pub
 COPY keys/ /keys/
 COPY users /keys/userlist
 COPY known_hosts /tmp/known_hosts
+COPY README.public /srv/README
+COPY README.user /tmp/README
 #RUN /usr/bin/pullsite.sh
 CMD ["/bin/sh", "/usr/bin/builder.sh"]

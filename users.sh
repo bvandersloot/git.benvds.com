@@ -12,6 +12,7 @@ do
 	adduser --gecos ",,," --home /home/$user --uid $uid --disabled-password $user
 	mkdir /home/$user/.ssh && chmod 700 /home/$user/.ssh
 	touch /home/$user/.ssh/authorized_keys && chmod 600 /home/$user/.ssh/authorized_keys
+	cp /tmp/README /home/$user/README
 	ln -s /srv /home/$user/git
 	chown -R $user:$user /home/$user
 	

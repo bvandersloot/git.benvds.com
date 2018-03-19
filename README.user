@@ -1,0 +1,25 @@
+Welcome to the inside of my Git server!
+
+All of the repos here live at the folder ~/git 
+This is just a symbolic link to /srv, but for your convenience.
+Access control is done entirely with Unix primitives like the octal file 
+permissions and user and group ownership. 
+Don't put anything in ~/git you don't want the world to see, unless you change
+the file permissions, of course. 
+The folder ~/git is served to the public over HTTPS at git.benvds.com
+
+if you have appropriate permissions, creating a repo is simple:
+
+$ mkdir example-repo
+$ cd example-repo
+$ git init
+
+then pull it down wherever you want.
+Cloning repos can be done over HTTPS for write only or by using:
+
+$ git clone $user@git.benvds.com:git/example-repo
+
+if the repo is in ~/git/example-repo
+
+
+If the repo is being used over SSH, you should have push access!
