@@ -2,6 +2,7 @@
 
 /usr/bin/pullsite.sh
 
+cp /tmp/README.public /srv/README
 cat /keys/userlist | users.sh
 
 bash ssh_start ssh-server &
