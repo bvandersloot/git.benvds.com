@@ -4,4 +4,17 @@ To build and then run:
 $ make
 $ make run
 
+If you want it to run, even on reboot
+
+$ make deploy
+
+And if you want to stop it, use the docker stop command 
+
+
+Make sure you have the following other files:
+
+keys/        <- put keys and such in here
+data/        <- should be owned by an admin: This is where the git data goes
+caddyfolder/ <- should be owned by www-data: This is where caddy puts certs.
+                no files here should be visible by users, so git misses them
 
