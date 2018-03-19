@@ -1,13 +1,10 @@
-git.benvds.com
-
-browse
-
-log stdout
-
-errors stdout
-
-cgi {
-	match /git
-	exec /usr/lib/git-core/git-http-backend
-	pass_env GIT_PROJECT_ROOT GIT_HTTP_EXPORT_ALL
+git.benvds.com {
+	browse
+	log stdout
+	errors stdout
+	cgi {
+		match /git
+		exec /usr/lib/git-core/git-http-backend
+		pass_env GIT_PROJECT_ROOT GIT_HTTP_EXPORT_ALL
+	}
 }

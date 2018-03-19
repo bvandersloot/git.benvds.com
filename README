@@ -1,0 +1,7 @@
+Custom git server docker instance. 
+To build and then run:
+
+$ make
+$ make run
+
+
